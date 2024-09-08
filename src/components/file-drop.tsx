@@ -27,7 +27,7 @@ export function FileDrop({ onFileSelected }: FileDropProps) {
   });
 
   return (
-    <div className="flex items-center justify-center p-4">
+    <div className="flex items-center justify-center h-full w-full p-4">
       <div
         {...getRootProps()}
         className={`flex items-center justify-center w-full h-full rounded-lg border-4 border-dashed transition-colors duration-300 ease-in-out cursor-pointer ${

@@ -26,12 +26,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="h-full m-0 p-0">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col h-full`}
       >
         <Nav />
-        {children}
+        <main className={"flex flex-col justify-stretch items-stretch grow"}>
+          {children}
+        </main>
       </body>
     </html>
   );

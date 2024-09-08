@@ -52,7 +52,7 @@ const chartConfig = {
   VirtualAmbientTemperature: {
     label: "Ambient Temperature",
     color: "#FF453A",
-  }
+  },
 } satisfies ChartConfig;
 
 export function GraphView({
@@ -63,12 +63,10 @@ export function GraphView({
   sensors: Sensor[];
 }) {
   return (
-    <ChartContainer config={chartConfig} className={"w-full min-h-[calc(100vh_/_2)]"}>
+    <ChartContainer config={chartConfig} className={""}>
       <LineChart accessibilityLayer data={data} height={400}>
         <CartesianGrid vertical={false} />
-        <YAxis
-          type={"number"}
-        />
+        <YAxis type={"number"} />
         <XAxis
           dataKey="Timestamp"
           tickLine={false}
@@ -78,14 +76,14 @@ export function GraphView({
         <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
 
         {sensors.map((sensor, i) => (
-            <Line
-                key={i}
-                dataKey={sensor}
-                stroke={`var(--color-${sensor})`}
-                type="monotone"
-                strokeWidth={2}
-                dot={false}
-            />
+          <Line
+            key={i}
+            dataKey={sensor}
+            stroke={`var(--color-${sensor})`}
+            type="monotone"
+            strokeWidth={2}
+            dot={false}
+          />
         ))}
       </LineChart>
     </ChartContainer>
