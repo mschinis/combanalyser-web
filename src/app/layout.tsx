@@ -4,6 +4,7 @@ import "./globals.css";
 import { Nav } from "@/components/nav";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import config from "@/config";
+import { Analytics } from "@vercel/analytics/react";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -35,6 +36,7 @@ export default function RootLayout({
         <main className={"flex flex-col justify-stretch items-stretch grow"}>
           {children}
           <GoogleAnalytics gaId={config.googleAnalytics.id} />
+          <Analytics />
         </main>
       </body>
     </html>
