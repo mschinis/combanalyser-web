@@ -12,6 +12,7 @@ import {
 import { Settings } from "lucide-react";
 import SettingsView from "@/components/settings-view";
 import { Suspense } from "react";
+import config from "@/config";
 
 export function Nav() {
   // const [scrolled, setScrolled] = useState(false)
@@ -47,6 +48,13 @@ export function Nav() {
         </h1>
         <nav>
           <ul className="flex items-center space-x-4">
+            <li>
+              <Button variant="ghost" asChild>
+                <a href={config.appstore.appURL} target={"_blank"}>
+                  Get the app
+                </a>
+              </Button>
+            </li>
             <li>
               <Dialog>
                 <DialogTrigger asChild>
