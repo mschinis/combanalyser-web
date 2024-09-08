@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/dialog";
 import { Settings } from "lucide-react";
 import SettingsView from "@/components/settings-view";
+import { Suspense } from "react";
 
 export function Nav() {
   // const [scrolled, setScrolled] = useState(false)
@@ -58,7 +59,9 @@ export function Nav() {
                   <DialogHeader>
                     <DialogTitle>Settings</DialogTitle>
                   </DialogHeader>
-                  <SettingsView />
+                  <Suspense>
+                    <SettingsView />
+                  </Suspense>
                 </DialogContent>
               </Dialog>
             </li>
