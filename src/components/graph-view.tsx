@@ -59,6 +59,7 @@ const chartConfig = {
 export function GraphView({
   data,
   sensors,
+  temperatureUnit,
 }: {
   data: CombustionMeasurement[];
   sensors: Sensor[];
@@ -71,7 +72,9 @@ export function GraphView({
         <YAxis
           type={"number"}
           tickFormatter={(value) => {
-            return `${value}℃`;
+            const temperatureSymbol =
+              temperatureUnit === TemperatureUnit.fahrenheit ? "℉" : "℃";
+            return `${value}${temperatureSymbol}`;
           }}
         />
         <XAxis

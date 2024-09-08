@@ -53,6 +53,7 @@ export default function SettingsView() {
 
   return (
     <div className="grid gap-4 py-4">
+      <Label className={"font-bold"}>Temperature curves</Label>
       {Probe.sensors.map((key) => (
         <div key={key} className="grid grid-cols-4 items-center gap-4">
           <Switch
@@ -63,7 +64,8 @@ export default function SettingsView() {
           <Label htmlFor={key}>{key}</Label>
         </div>
       ))}
-      <div className="grid grid-cols-4 items-center gap-4">
+      <div className="flex flex-col gap-4 mt-4">
+        <Label className={"font-bold"}>Temperature Units</Label>
         <Select
           value={temperatureUnit}
           onValueChange={(value) => {
