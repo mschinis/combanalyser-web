@@ -1,17 +1,12 @@
 "use client";
 
 import { FileDrop } from "@/components/file-drop";
-import { Suspense, useMemo, useState } from "react";
+import { Suspense, useState } from "react";
 import Papa from "papaparse";
-import { TemperatureChart } from "@/components/temperature-chart";
-import { parseAsArrayOf, parseAsStringEnum, useQueryState } from "nuqs";
 import {
   type CombustionMeasurement,
   type ParsedCombustionCSV,
 } from "@/types/csv";
-import { Sensor } from "@/enums/sensor";
-import { TemperatureUnit } from "@/enums/temperature-unit";
-import { convertCelsiusToFahrenheit } from "@/utils/temperature";
 import GraphView from "@/components/graph-view";
 
 export default function Home() {
@@ -40,6 +35,8 @@ export default function Home() {
       <GraphView data={parsedCSV.measurements} />
     </Suspense>
   ) : (
-    <FileDrop onFileSelected={onFileSelected} />
+    <>
+      <FileDrop onFileSelected={onFileSelected} />
+    </>
   );
 }

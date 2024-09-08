@@ -46,7 +46,16 @@ export function FileDrop({ onFileSelected }: FileDropProps) {
               Drop your CSV file here, or click to select
             </p>
             <p className="mt-2 text-sm text-gray-500">
-              Only CSV files are accepted
+              Only valid Combustion Inc CSV files are accepted
+            </p>
+            <p className="mt-2 text-sm">
+              <a
+                className={"mt-6 z-40"}
+                href="/combustion_kamado_chicken_example.csv"
+                onClick={(e) => e.stopPropagation()}
+              >
+                Download example file
+              </a>
             </p>
           </>
         </div>
