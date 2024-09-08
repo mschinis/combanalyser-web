@@ -7,6 +7,7 @@ import {
 import { CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts";
 import { CombustionMeasurement } from "@/types/csv";
 import { Sensor } from "@/enums/sensor";
+import { TemperatureUnit } from "@/enums/temperature-unit";
 
 const chartConfig = {
   T1: {
@@ -61,17 +62,36 @@ export function GraphView({
 }: {
   data: CombustionMeasurement[];
   sensors: Sensor[];
+  temperatureUnit: TemperatureUnit;
 }) {
   return (
     <ChartContainer config={chartConfig} className={""}>
       <LineChart accessibilityLayer data={data} height={400}>
         <CartesianGrid vertical={false} />
-        <YAxis type={"number"} />
+        <YAxis
+          type={"number"}
+          tickFormatter={(value) => {
+            return `${value}℃`;
+          }}
+        />
         <XAxis
           dataKey="Timestamp"
           tickLine={false}
           axisLine={false}
           tickMargin={8}
+          minTickGap={12 * 5}
+          tickFormatter={(value) => {
+            const minutes = Math.floor((value / 60) % 60);
+            const hours = Math.floor((value / (60 * 60)) % 60);
+
+            if (hours === 0) {
+              return `${String(minutes).padStart(2, "0")} minutes`;
+            }
+
+            return `${String(hours).padStart(2, "0")}:${String(
+              minutes,
+            ).padStart(2, "0")}`;
+          }}
         />
         <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
 

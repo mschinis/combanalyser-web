@@ -1,7 +1,7 @@
 "use client";
 
 import { FileDrop } from "@/components/file-drop";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Papa from "papaparse";
 import { GraphView } from "@/components/graph-view";
 import { parseAsArrayOf, parseAsStringEnum, useQueryState } from "nuqs";
@@ -10,9 +10,11 @@ import {
   type ParsedCombustionCSV,
 } from "@/types/csv";
 import { Sensor } from "@/enums/sensor";
+import { TemperatureUnit } from "@/enums/temperature-unit";
+import { convertCelsiusToFahrenheit } from "@/utils/temperature";
 
 export default function Home() {
-  // Get configuration from the query parameters, to enable shareable links
+  // Get configuration from the query parameters, to enable shareable links in the future
   const [sensors] = useQueryState(
     "sensors",
     parseAsArrayOf(
@@ -22,6 +24,13 @@ export default function Home() {
       Sensor.virtualSurfaceTemperature,
       Sensor.virtualAmbientTemperature,
     ]),
+  );
+
+  const [temperatureUnit] = useQueryState(
+    "temperatureUnit",
+    parseAsStringEnum<TemperatureUnit>(
+      Object.values(TemperatureUnit),
+    ).withDefault(TemperatureUnit.fahrenheit),
   );
 
   // State management for parsed file
@@ -43,10 +52,32 @@ export default function Home() {
     });
   };
 
+  // Convert measurements to Fahrenheit / Celsius if needed
+  const measurements = useMemo(() => {
+    return parsedCSV?.measurements.map((measurement) => {
+      return Object.entries(measurement).reduce((acc, [key, value]) => {
+        if ((Object.values(Sensor) as string[]).includes(key)) {
+          acc[key] =
+            temperatureUnit === TemperatureUnit.fahrenheit
+              ? convertCelsiusToFahrenheit(value)
+              : value;
+          return acc;
+        }
+
+        acc[key] = value;
+        return acc;
+      }, {});
+    }) as CombustionMeasurement[];
+  }, [temperatureUnit, parsedCSV?.measurements]);
+
   // If a file has been parsed display it - otherwise show the file picker UI
-  return parsedCSV ? (
+  return measurements ? (
     <div className={"h-full w-full p-16"}>
-      <GraphView data={parsedCSV.measurements} sensors={sensors} />
+      <GraphView
+        data={measurements}
+        sensors={sensors}
+        temperatureUnit={temperatureUnit}
+      />
     </div>
   ) : (
     <FileDrop onFileSelected={onFileSelected} />

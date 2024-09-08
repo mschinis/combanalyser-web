@@ -3,6 +3,16 @@ import { Sensor } from "@/enums/sensor";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { Probe } from "@/devices/probe";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { TemperatureUnit } from "@/enums/temperature-unit";
 
 export default function SettingsView() {
   const [sensors, setSensors] = useQueryState(
@@ -14,6 +24,13 @@ export default function SettingsView() {
       Sensor.virtualSurfaceTemperature,
       Sensor.virtualAmbientTemperature,
     ]),
+  );
+
+  const [temperatureUnit, setTemperatureUnit] = useQueryState(
+    "temperatureUnit",
+    parseAsStringEnum<TemperatureUnit>(
+      Object.values(TemperatureUnit),
+    ).withDefault(TemperatureUnit.fahrenheit),
   );
 
   const setSensorValue = (sensor: Sensor) => {
@@ -46,6 +63,24 @@ export default function SettingsView() {
           <Label htmlFor={key}>{key}</Label>
         </div>
       ))}
+      <div className="grid grid-cols-4 items-center gap-4">
+        <Select
+          value={temperatureUnit}
+          onValueChange={(value) => {
+            void setTemperatureUnit(value as TemperatureUnit);
+          }}
+        >
+          <SelectTrigger className="w-[180px]">
+            <SelectValue placeholder="Select temperature unit" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value={TemperatureUnit.fahrenheit}>
+              Fahrenheit
+            </SelectItem>
+            <SelectItem value={TemperatureUnit.celsius}>Celsius</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
     </div>
   );
 }
