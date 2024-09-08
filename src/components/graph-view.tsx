@@ -44,7 +44,7 @@ export default function GraphView({ data }: { data: CombustionMeasurement[] }) {
   }, [temperatureUnit, data]);
 
   return (
-    <div className={"h-full w-full p-16"}>
+    <div className={"h-full w-full pr-4 md:p-16"}>
       <TemperatureChart
         data={measurements}
         sensors={sensors}

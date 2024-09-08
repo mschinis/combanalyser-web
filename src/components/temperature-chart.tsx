@@ -66,49 +66,54 @@ export function TemperatureChart({
   temperatureUnit: TemperatureUnit;
 }) {
   return (
-    <ChartContainer config={chartConfig} className={""}>
-      <LineChart accessibilityLayer data={data} height={400}>
-        <CartesianGrid vertical={false} />
-        <YAxis
-          type={"number"}
-          tickFormatter={(value) => {
-            const temperatureSymbol =
-              temperatureUnit === TemperatureUnit.fahrenheit ? "℉" : "℃";
-            return `${value}${temperatureSymbol}`;
-          }}
-        />
-        <XAxis
-          dataKey="Timestamp"
-          tickLine={false}
-          axisLine={false}
-          tickMargin={8}
-          minTickGap={12 * 5}
-          tickFormatter={(value) => {
-            const minutes = Math.floor((value / 60) % 60);
-            const hours = Math.floor((value / (60 * 60)) % 60);
-
-            if (hours === 0) {
-              return `${String(minutes).padStart(2, "0")} minutes`;
-            }
-
-            return `${String(hours).padStart(2, "0")}:${String(
-              minutes,
-            ).padStart(2, "0")}`;
-          }}
-        />
-        <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
-
-        {sensors.map((sensor, i) => (
-          <Line
-            key={i}
-            dataKey={sensor}
-            stroke={`var(--color-${sensor})`}
-            type="monotone"
-            strokeWidth={2}
-            dot={false}
+    <>
+      <ChartContainer config={chartConfig} className={"w-full mt-4"}>
+        <LineChart accessibilityLayer data={data} height={400}>
+          <CartesianGrid vertical={false} />
+          <YAxis
+            type={"number"}
+            tickFormatter={(value) => {
+              const temperatureSymbol =
+                temperatureUnit === TemperatureUnit.fahrenheit ? "℉" : "℃";
+              return `${value}${temperatureSymbol}`;
+            }}
           />
-        ))}
-      </LineChart>
-    </ChartContainer>
+          <XAxis
+            dataKey="Timestamp"
+            tickLine={false}
+            axisLine={false}
+            tickMargin={8}
+            minTickGap={12 * 5}
+            tickFormatter={(value) => {
+              const minutes = Math.floor((value / 60) % 60);
+              const hours = Math.floor((value / (60 * 60)) % 60);
+
+              if (hours === 0) {
+                return `${String(minutes).padStart(2, "0")} minutes`;
+              }
+
+              return `${String(hours).padStart(2, "0")}:${String(
+                minutes,
+              ).padStart(2, "0")}`;
+            }}
+          />
+          <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
+
+          {sensors.map((sensor, i) => (
+            <Line
+              key={i}
+              dataKey={sensor}
+              stroke={`var(--color-${sensor})`}
+              type="monotone"
+              strokeWidth={2}
+              dot={false}
+            />
+          ))}
+        </LineChart>
+      </ChartContainer>
+      <div className={"landscape:hidden md:hidden text-center mt-16"}>
+        <p className={"text-red-700 text-center"}>Best viewed in landscape</p>
+      </div>
+    </>
   );
 }

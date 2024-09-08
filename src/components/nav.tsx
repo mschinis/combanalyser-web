@@ -41,7 +41,7 @@ export function Nav() {
     >
       <div className="container mx-auto px-4 h-full flex items-center justify-between">
         <h1
-          className={`font-bold transition-all duration-300 ease-in-out ${"text-xl"}`}
+          className={`font-bold transition-all duration-300 ease-in-out text-xl`}
         >
           CombAnalyser
         </h1>
@@ -55,7 +55,9 @@ export function Nav() {
                     <span className="sr-only">Settings</span>
                   </Button>
                 </DialogTrigger>
-                <DialogContent>
+                <DialogContent
+                  className={"max-h-[calc(100vh_-_64px)] overflow-scroll"}
+                >
                   <DialogHeader>
                     <DialogTitle>Settings</DialogTitle>
                   </DialogHeader>
