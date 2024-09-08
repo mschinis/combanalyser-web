@@ -1,6 +1,6 @@
 import {ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent} from "@/components/ui/chart";
-import {CartesianGrid, Line, LineChart, XAxis} from "recharts";
-import {CombustionMeasurement} from "@/app/page";
+import {CartesianGrid, Line, LineChart, XAxis, YAxis} from "recharts";
+import {CombustionMeasurement, Sensor} from "@/app/page";
 
 const chartConfig = {
     T1: {
@@ -11,81 +11,155 @@ const chartConfig = {
         label: "T2",
         color: "var(--chart-2)",
     },
+    T3: {
+        label: "T3",
+        color: "var(--chart-2)",
+    },
+    T4: {
+        label: "T4",
+        color: "var(--chart-2)",
+    },
+    T5: {
+        label: "T5",
+        color: "var(--chart-2)",
+    },
+    T6: {
+        label: "T6",
+        color: "var(--chart-2)",
+    },
+    T7: {
+        label: "T7",
+        color: "var(--chart-2)",
+    },
+    T8: {
+        label: "T8",
+        color: "var(--chart-2)",
+    },
 } satisfies ChartConfig
 
-export function GraphView({ data }: { data: CombustionMeasurement[] }) {
+export function GraphView({ data, sensors }: { data: CombustionMeasurement[], sensors: Sensor[] }) {
     return (
-        <ChartContainer config={chartConfig}>
+        <ChartContainer config={chartConfig} className={"min-h-[calc(100vh_/_2)]"}>
             <LineChart
                 accessibilityLayer
                 data={data}
-                margin={{
-                    left: 12,
-                    right: 12,
-                }}
+                height={400}
             >
                 <CartesianGrid vertical={false} />
+                <YAxis type={"number"}
+                //        tickFormatter={value => {
+                //     return `${value}`.slice(0,3)
+                // }}
+                />
                 <XAxis
-                    dataKey="month"
+                    dataKey="Timestamp"
                     tickLine={false}
                     axisLine={false}
                     tickMargin={8}
-                    tickFormatter={(value) => value.slice(0, 3)}
+                    // tickFormatter={(value) => {
+                    //     console.log('value', value)
+                    //     return `${value}`.slice(0, 3)
+                    // }}
                 />
                 <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
-                <Line
-                    dataKey="T1"
-                    type="monotone"
-                    // stroke="var(--color-desktop)"
-                    strokeWidth={2}
-                    dot={false}
-                />
+                {sensors.includes(Sensor.t1) &&
+                    <Line
+                        dataKey="T1"
+                        type="monotone"
+                        // stroke="var(--color-desktop)"
+                        strokeWidth={2}
+                        dot={false}
+                    />
+                }
+
+                {sensors.includes(Sensor.t2) &&
                 <Line
                     dataKey="T2"
                     type="monotone"
                     // stroke="var(--color-mobile)"
                     strokeWidth={2}
                     dot={false}
-                /> <Line
+                />
+                }
+
+                {sensors.includes(Sensor.t3) &&
+                <Line
                     dataKey="T3"
                     type="monotone"
                     // stroke="var(--color-mobile)"
                     strokeWidth={2}
                     dot={false}
-                /> <Line
+                /> }
+                {sensors.includes(Sensor.t4) && <Line
                     dataKey="T4"
                     type="monotone"
                     // stroke="var(--color-mobile)"
                     strokeWidth={2}
                     dot={false}
-                /> <Line
-                    dataKey="T5"
-                    type="monotone"
-                    // stroke="var(--color-mobile)"
-                    strokeWidth={2}
-                    dot={false}
-                />
-                <Line
-                    dataKey="T6"
-                    type="monotone"
-                    // stroke="var(--color-mobile)"
-                    strokeWidth={2}
-                    dot={false}
-                />
-                <Line
-                    dataKey="T7"
-                    type="monotone"
-                    // stroke="var(--color-mobile)"
-                    strokeWidth={2}
-                    dot={false}
-                />
-                <Line
-                    dataKey="T8"
-                    type="monotone"
-                    // stroke="var(--color-mobile)"
-                    strokeWidth={2}
-                    dot={false}
-                />
+                />}
+                {sensors.includes(Sensor.t5) &&
+                    <Line
+                        dataKey="T5"
+                        type="monotone"
+                        // stroke="var(--color-mobile)"
+                        strokeWidth={2}
+                        dot={false}
+                    />
+                }
+                {sensors.includes(Sensor.t6) &&
+                    <Line
+                        dataKey="T6"
+                        type="monotone"
+                        // stroke="var(--color-mobile)"
+                        strokeWidth={2}
+                        dot={false}
+                    />
+                }
+                {sensors.includes(Sensor.t7) &&
+                    <Line
+                        dataKey="T7"
+                        type="monotone"
+                        // stroke="var(--color-mobile)"
+                        strokeWidth={2}
+                        dot={false}
+                    />
+                }
+                {sensors.includes(Sensor.t8) &&
+                    <Line
+                        dataKey="T8"
+                        type="monotone"
+                        // stroke="var(--color-mobile)"
+                        strokeWidth={2}
+                        dot={false}
+                    />
+                }
+                {sensors.includes(Sensor.virtualCoreTemperature) &&
+                    <Line
+                        dataKey={`${Sensor.virtualCoreTemperature}`}
+                        type="monotone"
+                        // stroke="var(--color-mobile)"
+                        strokeWidth={2}
+                        dot={false}
+                    />
+                }
+                {sensors.includes(Sensor.virtualSurfaceTemperature) &&
+                    <Line
+                        dataKey={`${Sensor.virtualSurfaceTemperature}`}
+                        type="monotone"
+                        // stroke="var(--color-mobile)"
+                        strokeWidth={2}
+                        dot={false}
+                    />
+                }
+                {sensors.includes(Sensor.virtualAmbientTemperature) &&
+                    <Line
+                        dataKey={`${Sensor.virtualAmbientTemperature}`}
+                        type="monotone"
+                        // stroke="var(--color-mobile)"
+                        strokeWidth={2}
+                        dot={false}
+                    />
+                }
 
             </LineChart>
         </ChartContainer>
