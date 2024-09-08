@@ -1,7 +1,7 @@
-type ParsedCombustionCSV = {
+export interface ParsedCombustionCSV {
     headers: string;
     measurements: CombustionMeasurement[];
-};
+}
 
 export interface CombustionMeasurement {
     Timestamp: string;

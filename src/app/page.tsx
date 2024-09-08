@@ -5,9 +5,11 @@ import { useState } from "react";
 import Papa from "papaparse";
 import { GraphView } from "@/components/graph-view";
 import { parseAsArrayOf, parseAsStringEnum, useQueryState } from "nuqs";
-import {CombustionMeasurement, ParsedCombustionCSV, Sensor} from "@/types";
+import {type CombustionMeasurement, type ParsedCombustionCSV } from "@/types";
+import { Sensor } from "@/enums/sensor";
 
 export default function Home() {
+  // Get configuration from the query parameters, to enable shareable links
   const [sensors, setSensors] = useQueryState(
     "sensors",
     parseAsArrayOf(
@@ -19,9 +21,11 @@ export default function Home() {
     ]),
   );
 
-  const [parsedCSV, setparsedCSV] =
+  // State management for parsed file
+  const [parsedCSV, setParsedCSV] =
     useState<ParsedCombustionCSV>();
 
+  // Handle file selection or dropped
   const onFileSelected = async (file: File) => {
     const fileContents = await file.text();
     const [headers, csvContents] = fileContents.split("\n\n");
@@ -31,12 +35,13 @@ export default function Home() {
       dynamicTyping: true,
     });
 
-    setparsedCSV({
+    setParsedCSV({
       headers,
       measurements: data,
     });
   };
 
+  // If a file has been parsed display it - otherwise show the file picker UI
   return parsedCSV ? (
     <div className={"flex flex-col justify-center container"}>
       <GraphView data={parsedCSV.measurements} sensors={sensors} />
