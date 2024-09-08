@@ -10,6 +10,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Settings } from "lucide-react";
+import SettingsView from "@/components/settings-view";
 
 export function Nav() {
   // const [scrolled, setScrolled] = useState(false)
@@ -57,28 +58,7 @@ export function Nav() {
                   <DialogHeader>
                     <DialogTitle>Settings</DialogTitle>
                   </DialogHeader>
-                  <div className="grid gap-4 py-4">
-                    <div className="grid grid-cols-4 items-center gap-4">
-                      <label htmlFor="name" className="text-right">
-                        Name
-                      </label>
-                      <input
-                        id="name"
-                        defaultValue="Pedro Duarte"
-                        className="col-span-3 px-3 py-2 border rounded-md"
-                      />
-                    </div>
-                    <div className="grid grid-cols-4 items-center gap-4">
-                      <label htmlFor="username" className="text-right">
-                        Username
-                      </label>
-                      <input
-                        id="username"
-                        defaultValue="@peduarte"
-                        className="col-span-3 px-3 py-2 border rounded-md"
-                      />
-                    </div>
-                  </div>
+                  <SettingsView />
                 </DialogContent>
               </Dialog>
             </li>
